@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\MenuKantin;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class MenuKantinController extends Controller
 {
@@ -14,6 +14,7 @@ class MenuKantinController extends Controller
     public function index()
     {
         $menukantin = MenuKantin::paginate(10);
+
         return view('menukantin.index', compact('menukantin'));
     }
 
@@ -31,18 +32,18 @@ class MenuKantinController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'kode_menu' => 'required|unique:menu_kantins,kode_menu',
-            'nama_menu' => 'required',
-            'kategori' => 'required',
-            'harga' => 'required|numeric',
-            'stok' => 'required|integer',
-            'status' => 'required',
-            'keterangan' => 'nullable',
+            'kode_menu' => ['required', 'string', 'max:50', 'unique:menu_kantins,kode_menu'],
+            'nama_menu' => ['required', 'string', 'max:255'],
+            'kategori' => ['required', 'string', 'max:100'],
+            'harga' => ['required', 'numeric', 'min:0'],
+            'stok' => ['required', 'integer', 'min:0'],
+            'status' => ['required', 'string', 'max:50'],
+            'keterangan' => ['nullable', 'string'],
         ]);
 
         MenuKantin::create($validated);
 
-        return redirect()->route('menukantin.index')->witth('success', 'Menu kantin berhasil ditambahkan.');
+        return redirect()->route('menukantin.index')->with('success', 'Menu kantin berhasil ditambahkan.');
     }
 
     /**
@@ -67,18 +68,18 @@ class MenuKantinController extends Controller
     public function update(Request $request, MenuKantin $menuKantin)
     {
         $validated = $request->validate([
-            'kode_menu' => 'required|unique:menu_kantins,kode_menu',
-            'nama_menu' => 'required',
-            'kategori' => 'required',
-            'harga' => 'required|numeric',
-            'stok' => 'required|integer',
-            'status' => 'required',
-            'keterangan' => 'nullable',
+            'kode_menu' => ['required', 'string', 'max:50', Rule::unique('menu_kantins', 'kode_menu')->ignore($menuKantin->id)],
+            'nama_menu' => ['required', 'string', 'max:255'],
+            'kategori' => ['required', 'string', 'max:100'],
+            'harga' => ['required', 'numeric', 'min:0'],
+            'stok' => ['required', 'integer', 'min:0'],
+            'status' => ['required', 'string', 'max:50'],
+            'keterangan' => ['nullable', 'string'],
         ]);
 
         $menuKantin->update($validated);
 
-        return redirect()->route('menukantin.edit')->with('success', 'Menu berhasil diubah!');
+        return redirect()->route('menukantin.index')->with('success', 'Menu berhasil diubah!');
     }
 
     /**
@@ -87,6 +88,7 @@ class MenuKantinController extends Controller
     public function destroy(MenuKantin $menuKantin)
     {
         $menuKantin->delete();
-        return redirect()->route('menukantin.destroy')->with('success', 'Menu berhasil dihapus!');
+
+        return redirect()->route('menukantin.index')->with('success', 'Menu berhasil dihapus!');
     }
 }
