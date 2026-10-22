@@ -39,6 +39,14 @@
                 <th>Keterangan</th>
                 <td>: {{ $menuKantin->keterangan ?? '-' }}</td>
             </tr>
+            <tr>
+                <th>Created At</th>
+                <td>: {{ $menuKantin->created_at }}</td>
+            </tr>
+            <tr>
+                <th>Updated At</th>
+                <td>: {{ $menuKantin->updated_at }}</td>
+            </tr>
         </table>
 
         <div class="mt-4">

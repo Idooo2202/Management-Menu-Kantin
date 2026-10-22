@@ -43,7 +43,7 @@ class MenuKantinController extends Controller
 
         MenuKantin::create($validated);
 
-        return redirect()->route('menukantin.index')->with('success', 'Menu kantin berhasil ditambahkan.');
+        return redirect()->route('menukantin.index')->with('success', 'Menu berhasil ditambahkan.');
     }
 
     /**

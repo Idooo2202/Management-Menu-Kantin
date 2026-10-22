@@ -6,7 +6,7 @@
         <h5 class="mb-0">Edit Produk</h5>
     </div>
     <div class="card-body">
-        <form action="{{ route('menukantin.update', ['menuKantin' => $menuKantin->id]) }}" method="POST">
+        <form action="{{ route('menukantin.update', $menuKantin->id) }}" method="POST">
             @csrf
             @method('PUT')
 

@@ -49,7 +49,7 @@
             </div>
 
             <div class="mt-4">
-                <button type="submit" class="btn btn-success">Tambah Produk</button>
+                <button type="submit" class="btn btn-success">Tambah Menu</button>
                 <a href="{{ route('menukantin.index') }}" class="btn btn-secondary">Batal</a>
             </div>
         </form>
