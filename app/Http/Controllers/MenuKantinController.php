@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\MenuKantin;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class MenuKantinController extends Controller
      */
     public function index()
     {
-        //
+        $menukantin = MenuKantin::paginate(10);
+        return view('menukantin.index', compact('menukantin'));
     }
 
     /**
@@ -20,7 +22,7 @@ class MenuKantinController extends Controller
      */
     public function create()
     {
-        //
+        return view('menukantin.create');
     }
 
     /**
@@ -28,7 +30,19 @@ class MenuKantinController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'kode_menu' => 'required|unique:menu_kantins,kode_menu',
+            'nama_menu' => 'required',
+            'kategori' => 'required',
+            'harga' => 'required|numeric',
+            'stok' => 'required|integer',
+            'status' => 'required',
+            'keterangan' => 'nullable',
+        ]);
+
+        MenuKantin::create($validated);
+
+        return redirect()->route('menukantin.index')->witth('success', 'Menu kantin berhasil ditambahkan.');
     }
 
     /**
@@ -36,7 +50,7 @@ class MenuKantinController extends Controller
      */
     public function show(MenuKantin $menuKantin)
     {
-        //
+        return view('menukantin.show', compact('menuKantin'));
     }
 
     /**
@@ -44,7 +58,7 @@ class MenuKantinController extends Controller
      */
     public function edit(MenuKantin $menuKantin)
     {
-        //
+        return view('menukantin.edit', compact('menuKantin'));
     }
 
     /**
@@ -52,7 +66,19 @@ class MenuKantinController extends Controller
      */
     public function update(Request $request, MenuKantin $menuKantin)
     {
-        //
+        $validated = $request->validate([
+            'kode_menu' => 'required|unique:menu_kantins,kode_menu',
+            'nama_menu' => 'required',
+            'kategori' => 'required',
+            'harga' => 'required|numeric',
+            'stok' => 'required|integer',
+            'status' => 'required',
+            'keterangan' => 'nullable',
+        ]);
+
+        MenuKantin::edit($validated);
+
+        return redirect()->route('menukantin.edit')->with('success', 'Menu berhasil diubah!');
     }
 
     /**
@@ -60,6 +86,7 @@ class MenuKantinController extends Controller
      */
     public function destroy(MenuKantin $menuKantin)
     {
-        //
+        $menuKantin->delete();
+        return redirect()->route('menukantin.destroy')->with('success', 'Menu berhasil dihapus!');
     }
 }
