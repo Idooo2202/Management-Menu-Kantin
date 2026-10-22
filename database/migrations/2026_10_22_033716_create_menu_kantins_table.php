@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('menu_kantins', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_menu')->unique();
+            $table->string('nama_menu');
+            $table->string('kategori');
+            $table->decimal('harga', 12, 2);
+            $table->integer('stok');
+            $table->string('status')->default('tak tersedia');
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }
