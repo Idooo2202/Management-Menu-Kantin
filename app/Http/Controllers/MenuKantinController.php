@@ -76,7 +76,7 @@ class MenuKantinController extends Controller
             'keterangan' => 'nullable',
         ]);
 
-        MenuKantin::edit($validated);
+        $menuKantin->update($validated);
 
         return redirect()->route('menukantin.edit')->with('success', 'Menu berhasil diubah!');
     }

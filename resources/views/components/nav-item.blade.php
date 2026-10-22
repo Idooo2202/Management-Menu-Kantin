@@ -1,3 +1,9 @@
-<div>
-    <!-- Knowing is not enough; we must apply. Being willing is not enough; we must do. - Leonardo da Vinci -->
-</div>
+<li class="nav-item">
+    <a
+        class="nav-link {{ $active ? 'active fw-semibold text-black' : 'text-black' }}"
+        href="{{ $href }}"
+        style="color: #000 !important;"
+    >
+        {{ $slot }}
+    </a>
+</li>
